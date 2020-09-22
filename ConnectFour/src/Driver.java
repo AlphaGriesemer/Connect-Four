@@ -20,6 +20,7 @@ public class Driver {
             if (b.isGameOver()) {
                 break;
             }
+            System.out.println(b.getAvailableCells());
         }
 
             //b.minimax(Board_PLAYER_Y);

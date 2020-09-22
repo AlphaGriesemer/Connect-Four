@@ -9,12 +9,13 @@ public class Board {
     public boolean isGameOver(){
         return checkWin(PLAYER_R) || checkWin(PLAYER_Y) || getAvailableCells().isEmpty();
     }
-    public List<Integer> getAvailableCells(){
-        List<Integer> availableCells = new ArrayList<>();
+    public List<List<Integer>> getAvailableCells(){
+        List<List<Integer>> availableCells = new ArrayList<>();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length ; j++) {
                 if(board[i][j] == NO_PLAYER){
-                    availableCells.add(i, j);
+                    List<Integer> pair = new List<Integer>()
+                    availableCells.add();
                 }
             }
         }
