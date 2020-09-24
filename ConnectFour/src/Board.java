@@ -12,14 +12,11 @@ public class Board {
     public List<List<Integer>> getAvailableCells(){
         List<List<Integer>> availableCells = new ArrayList<>();
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length ; j++) {
-                if(board[i][j] == NO_PLAYER){
-                    List<Integer> pair = new ArrayList<>();
-                    pair.add(i);
-                    pair.add(j);
-                    availableCells.add(pair);
-                }
-            }
+            int row = getCellBasedOnMove(i + 1);
+            List<Integer> pair = new ArrayList<>();
+            pair.add(i);
+            pair.add(row);
+            availableCells.add(pair);
         }
         return availableCells;
     }
@@ -41,6 +38,7 @@ public class Board {
         }
         return false;
     }
+
     public int getBoardLength(){
         return board.length;
     }
@@ -81,8 +79,6 @@ public class Board {
         int column = move-1;
         for (int row = board.length-1; row >= 0; row--) {
             if(board[row][column] == NO_PLAYER){
-                System.out.println(row);
-                System.out.println(column);
                 return row;
             }
         }

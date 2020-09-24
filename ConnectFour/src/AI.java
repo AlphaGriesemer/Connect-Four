@@ -2,7 +2,7 @@ import java.util.List;
 
 public class AI extends Board{
     private int depth;
-    public int minimax(){
+    public int minimax(int turn){
         depth = 0;
         if(checkWin(PLAYER_R)){
             return -10;
@@ -19,7 +19,16 @@ public class AI extends Board{
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < getBoardLength() ; i++) {
+            List<Integer> point = availableCells.get(i);
+            if(turn == PLAYER_Y){
+                placeMove((point.get(0) + 1), PLAYER_Y);
+                int currentScore = minimax(PLAYER_R);
+                max = Math.max(currentScore, max);
 
+                if(currentScore >= 0){
+
+                }
+            }
         }
 
 
