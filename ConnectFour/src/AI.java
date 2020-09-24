@@ -10,9 +10,21 @@ public class AI extends Board{
         else if(checkWin(PLAYER_Y)){
             return 10;
         }
-        else if(getAvailableCells().isEmpty()){
+
+        List<List<Integer>> availableCells = getAvailableCells();
+
+        if(availableCells.isEmpty()){
             return 0;
         }
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < getBoardLength() ; i++) {
+
+        }
+
+
+
+
         while(depth!=6){
 
         }

@@ -14,8 +14,10 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length ; j++) {
                 if(board[i][j] == NO_PLAYER){
-                    List<Integer> pair = new List<Integer>()
-                    availableCells.add();
+                    List<Integer> pair = new ArrayList<>();
+                    pair.add(i);
+                    pair.add(j);
+                    availableCells.add(pair);
                 }
             }
         }
@@ -38,6 +40,9 @@ public class Board {
             }
         }
         return false;
+    }
+    public int getBoardLength(){
+        return board.length;
     }
     public void displayBoard(){
         System.out.println("1234");
