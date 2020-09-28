@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Driver {
     public static void main(String[] args) {
         Board b = new Board();
+        AI ai = new AI();
         Scanner scanner = new Scanner(System.in);
         b.displayBoard();
         while(!b.isGameOver()) {
@@ -20,12 +21,14 @@ public class Driver {
             if (b.isGameOver()) {
                 break;
             }
-            System.out.println(b.getAvailableCells());
-        }
+            //System.out.println(b.getAvailableCells());
 
-            //b.minimax(Board_PLAYER_Y);
-            //b.placeMove(b.computerMove, Board_PLAYER_Y)
-            //b.displayBoard();
+            ai.minimax(0, Board.PLAYER_Y, b);
+            b.placeMove(ai.getComputerMove() + 1, Board.PLAYER_Y);
+            //System.out.println(ai.getComputerMove());
+            //System.out.println(b.getAvailableCells());
+            b.displayBoard();
+        }
 
         if(b.checkWin(Board.PLAYER_Y)){
             System.out.println("You Lost !");

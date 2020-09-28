@@ -1,44 +1,80 @@
 import java.util.List;
 
-public class AI extends Board{
+public class AI extends Board {
     private int depth;
-    public int minimax(int turn){
-        depth = 0;
-        if(checkWin(PLAYER_R)){
+    //private Board board;
+    private Integer computerMove;
+
+    public int getComputerMove(){
+        return computerMove;
+    }
+
+    public int minimax(int depth, int turn, Board board) {
+        if (board.checkWin(PLAYER_Y)) {
+            return 10;
+
+        }
+        else if (board.checkWin(PLAYER_R)) {
             return -10;
         }
-        else if(checkWin(PLAYER_Y)){
-            return 10;
-        }
+        List<List<Integer>> availableCells = board.getAvailableCells();
+        System.out.println(availableCells);
 
-        List<List<Integer>> availableCells = getAvailableCells();
-
-        if(availableCells.isEmpty()){
+        if (availableCells.isEmpty()) {
             return 0;
         }
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
-        for (int i = 0; i < getBoardLength() ; i++) {
+        for (int i = 0; i < availableCells.size(); i++) {
             List<Integer> point = availableCells.get(i);
-            if(turn == PLAYER_Y){
-                placeMove((point.get(0) + 1), PLAYER_Y);
-                int currentScore = minimax(PLAYER_R);
+            if (turn == PLAYER_Y) {
+                board.placeMove((point.get(0) + 1), PLAYER_Y);
+                board.displayBoard();
+                int currentScore = minimax(depth + 1, PLAYER_R, board);
                 max = Math.max(currentScore, max);
+                if ()
 
-                if(currentScore >= 0){
+                /*if (currentScore >= 0) {
+                    if (depth == 0) {
+                        computerMove = point.get(0);
+                        //placeMove(point.get(0) + 1, PLAYER_Y);
+                    }
+                }
+                if (currentScore == 10) {
+                    break;
+                }
+                if (i == availableCells.size() - 1 && max < 0) {
+                    if (depth == 0) {
+                        computerMove = point.get(0);
+                        //board.placeMove(point.get(0) + 1, PLAYER_Y);
+                    }
 
+                    //getBoard()[point.get(0)][point.get(1)] = PLAYER_Y;
+                }*/
+            }
+            else if (turn == PLAYER_R) {
+                board.placeMove(point.get(0) + 1, PLAYER_R);
+                board.displayBoard();
+                int currentScore = minimax(depth + 1, PLAYER_Y, board);
+                min = Math.min(currentScore, min);
+                if (min == -10) {
+                    //board.getBoard()[point.get(0)][point.get(1)] = NO_PLAYER;
+                    board.setNoPlayer(point.get(0), point.get(1));
+                    break;
                 }
             }
+            //board.getBoard()[point.get(0)][point.get(1)] = NO_PLAYER;
+            board.setNoPlayer(point.get(0), point.get(1));
+            //board.displayBoard();
         }
-
-
-
-
-        while(depth!=6){
-
+        if(turn == PLAYER_Y){
+            return max;
         }
-        return 0;
+        else{
+            return min;
+        }
     }
+}
 //    if Red wins
 //        return score 10;
 //    else if Yellow (opponent) wins
@@ -114,4 +150,3 @@ public class AI extends Board{
 //        return turn == PLAYER_X ? max : min;
 //    }
 
-}
