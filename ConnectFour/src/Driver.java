@@ -21,7 +21,7 @@ public class Driver {
             if (b.isGameOver()) {
                 break;
             }
-            //System.out.println(b.getAvailableCells());
+            System.out.println(b.getAvailableCells());
 
             ai.minimax(0, Board.PLAYER_Y, b);
             b.placeMove(ai.getComputerMove() + 1, Board.PLAYER_Y);

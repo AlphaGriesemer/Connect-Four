@@ -10,6 +10,11 @@ public class AI extends Board {
     }
 
     public int minimax(int depth, int turn, Board board) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int bestMoveSoFar = -1;
+        List<List<Integer>> availableCells = board.getAvailableCells();
+
         if (board.checkWin(PLAYER_Y)) {
             return 10;
 
@@ -17,56 +22,28 @@ public class AI extends Board {
         else if (board.checkWin(PLAYER_R)) {
             return -10;
         }
-        List<List<Integer>> availableCells = board.getAvailableCells();
-        System.out.println(availableCells);
 
         if (availableCells.isEmpty()) {
             return 0;
         }
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
+
         for (int i = 0; i < availableCells.size(); i++) {
             List<Integer> point = availableCells.get(i);
+            board.setPlayer(point.get(0), point.get(1), turn);
             if (turn == PLAYER_Y) {
-                board.placeMove((point.get(0) + 1), PLAYER_Y);
-                board.displayBoard();
                 int currentScore = minimax(depth + 1, PLAYER_R, board);
-                max = Math.max(currentScore, max);
-                if ()
-
-                /*if (currentScore >= 0) {
-                    if (depth == 0) {
-                        computerMove = point.get(0);
-                        //placeMove(point.get(0) + 1, PLAYER_Y);
-                    }
+                if(currentScore > max){
+                    max = currentScore;
+                    bestMoveSoFar = point.get(1);
                 }
-                if (currentScore == 10) {
-                    break;
-                }
-                if (i == availableCells.size() - 1 && max < 0) {
-                    if (depth == 0) {
-                        computerMove = point.get(0);
-                        //board.placeMove(point.get(0) + 1, PLAYER_Y);
-                    }
-
-                    //getBoard()[point.get(0)][point.get(1)] = PLAYER_Y;
-                }*/
             }
             else if (turn == PLAYER_R) {
-                board.placeMove(point.get(0) + 1, PLAYER_R);
-                board.displayBoard();
                 int currentScore = minimax(depth + 1, PLAYER_Y, board);
                 min = Math.min(currentScore, min);
-                if (min == -10) {
-                    //board.getBoard()[point.get(0)][point.get(1)] = NO_PLAYER;
-                    board.setNoPlayer(point.get(0), point.get(1));
-                    break;
-                }
             }
-            //board.getBoard()[point.get(0)][point.get(1)] = NO_PLAYER;
             board.setNoPlayer(point.get(0), point.get(1));
-            //board.displayBoard();
         }
+        computerMove = bestMoveSoFar;
         if(turn == PLAYER_Y){
             return max;
         }

@@ -11,12 +11,12 @@ public class Board {
     }
     public List<List<Integer>> getAvailableCells(){
         List<List<Integer>> availableCells = new ArrayList<>();
-        for (int i = 0; i < board[0].length; i++) {
-            int row = getCellBasedOnMove(i + 1);
+        for (int column = 0; column < board[0].length; column++) {
+            int row = getCellBasedOnMove(column);
             if(row != 10){
                 List<Integer> pair = new ArrayList<>();
-                pair.add(i);
                 pair.add(row);
+                pair.add(column);
                 availableCells.add(pair);
             }
         }
@@ -26,7 +26,7 @@ public class Board {
         if (board[0][0] == board[1][1] && board[0][0] == board[2][2] && board[0][0] == board[3][3] && board[0][0] == player){
             return true;
         }
-        else if (board[0][2] == board[1][1] && board[0][2] == board[2][0] && board[0][2] == board[0][3] && board[0][2] == player){
+        else if (board[0][3] == board[1][2] && board[0][3] == board[2][1] && board[0][3] == board[3][0] && board[0][3] == player){
             return true;
         }
 
@@ -74,18 +74,19 @@ public class Board {
     public void setNoPlayer(int row, int column){
         board[row][column] = NO_PLAYER;
     }
+    public void setPlayer(int row, int column, int player){
+        board[row][column] = player;
+    }
     public boolean placeMove(int move, int player){
-        int secondNum = getCellBasedOnMove(move);
+        int secondNum = getCellBasedOnMove(move-1);
         if(secondNum == 10){
             return false;
         }
-        //System.out.println(secondNum);
         board[secondNum][move-1] = player;
-        //System.out.println(board[move][secondNum]);
         return true;
     }
-    private int getCellBasedOnMove(int move){
-        int column = move-1;
+    private int getCellBasedOnMove(int column){
+
         for (int row = board.length-1; row >= 0; row--) {
             if(board[row][column] == NO_PLAYER){
                 return row;
